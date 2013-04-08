@@ -1,21 +1,38 @@
 #include<glut.h>
 
-int x,y;
-
-void Timer( int value )
-{
-   if( value ) glutPostRedisplay();
-   glutTimerFunc(100,Timer,value);
-}
+int angle=0,x,y;
 
 void keyboard(unsigned char key,int x,int y)
 {
 	if(key=='c')
 	{
-		Timer(0);
 		glClearColor(1,0,0,0);
 
 	}
+}
+
+void cube(int value)
+{
+	glRotatef(angle,1,0,0);
+	glRotatef(angle,0,1,0);
+	glRotatef(angle,0,0,1);
+	//glTranslatef(2,1,0);
+	glColor3f(0,0,1);
+	glutWireSphere(2,10,10);
+	angle+=0.5;
+	glutPostRedisplay();
+	glFlush();
+}
+
+void color(int value)
+{
+	int z;
+	x=0;
+	glClearColor(x,0,0,0);
+	x+=0.1;
+	if(x==1)
+		x=0;
+	glutPostRedisplay();
 }
 
 
@@ -32,20 +49,10 @@ void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	drawstring("Santosh");
-	glutPostRedisplay();
+	glutTimerFunc(25,cube,0);
 	glFlush();
 }
 
-void idle()
-{
-	int z;
-	x=0;
-	//glClearColor(x,0,0,0);
-	x+=0.1;
-	if(x==1)
-		x=0;
-	glutPostRedisplay();
-}
 
 void myReshape(int w, int h)
 {
@@ -65,7 +72,7 @@ void main()
 	glutCreateWindow("Splash Screen");
 	glutDisplayFunc(display);
 	glutReshapeFunc(myReshape);
-	glutIdleFunc(idle);
+	glutTimerFunc(25,color,0);
 	glutKeyboardFunc(keyboard);
 	glutMainLoop();
 }
