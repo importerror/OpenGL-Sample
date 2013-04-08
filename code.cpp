@@ -2,10 +2,20 @@
 
 int x,y;
 
+void Timer( int value )
+{
+   if( value ) glutPostRedisplay();
+   glutTimerFunc(100,Timer,value);
+}
+
 void keyboard(unsigned char key,int x,int y)
 {
 	if(key=='c')
-		glClearColor(0,1,0,0);
+	{
+		Timer(0);
+		glClearColor(1,0,0,0);
+
+	}
 }
 
 
